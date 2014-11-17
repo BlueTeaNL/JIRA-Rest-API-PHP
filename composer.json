@@ -1,0 +1,26 @@
+{
+    "name": "bluetea/jira-rest-api",
+    "description": "Atlassian JIRA REST API PHP Library",
+    "keywords": ["atlassian","jira","api"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pim Widdershoven",
+            "email": "p.widdershoven@bluetea.nl",
+            "homepage": "http://www.bluetea.nl",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bluetea\\": "src/"
+        }
+    },
+    "target-dir": "Bluetea/jstree-rest-api"
+}
