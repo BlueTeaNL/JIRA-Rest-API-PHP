@@ -21,6 +21,5 @@
         "psr-0": {
             "Bluetea\\": "src/"
         }
-    },
-    "target-dir": "Bluetea/jstree-rest-api"
+    }
 }
