@@ -2,7 +2,7 @@
 
 namespace Bluetea\Api\Authentication;
 
-class Anonymous implements AuthenticationInterface
+class AnonymousAuthentication implements AuthenticationInterface
 {
     /**
      * @return null
