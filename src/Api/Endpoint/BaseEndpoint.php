@@ -1,6 +1,6 @@
 <?php
 
-namespace Bluetea\Jira\Endpoint;
+namespace Bluetea\Api\Endpoint;
 
 use Bluetea\Api\Client\ClientInterface;
 

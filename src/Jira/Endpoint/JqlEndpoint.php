@@ -2,6 +2,9 @@
 
 namespace Bluetea\Jira\Endpoint;
 
+use Bluetea\Api\Endpoint\BaseEndpoint;
+use Bluetea\Api\Endpoint\EndpointInterface;
+
 class JqlEndpoint extends BaseEndpoint implements EndpointInterface
 {
     /**

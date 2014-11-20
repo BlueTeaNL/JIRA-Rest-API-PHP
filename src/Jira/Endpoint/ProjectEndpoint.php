@@ -2,6 +2,8 @@
 
 namespace Bluetea\Jira\Endpoint;
 
+use Bluetea\Api\Endpoint\BaseEndpoint;
+use Bluetea\Api\Endpoint\EndpointInterface;
 use Bluetea\Api\Exception\EndpointParameterException;
 use Bluetea\Api\Request\HttpMethod;
 
@@ -43,7 +45,6 @@ class ProjectEndpoint extends BaseEndpoint implements EndpointInterface
      */
     public function convertAvatar($projectId, $cropperWidth, $cropperOffsetX, $cropperOffsetY, $needsCropping)
     {
-        $this->apiClient->setHttpMethod(HttpMethod::REQUEST_POST);
         return $this->apiClient->callEndpoint(
             sprintf('%s/%s/avatar', self::ENDPOINT, $projectId),
             array(
@@ -51,7 +52,8 @@ class ProjectEndpoint extends BaseEndpoint implements EndpointInterface
                 "cropperOffsetX" => $cropperOffsetX,
                 "cropperOffsetY" => $cropperOffsetY,
                 "needsCropping" => $needsCropping
-            )
+            ),
+            HttpMethod::REQUEST_POST
         );
     }
 
@@ -64,8 +66,7 @@ class ProjectEndpoint extends BaseEndpoint implements EndpointInterface
      */
     public function deleteAvatar($projectId, $avatarId)
     {
-        $this->apiClient->setHttpMethod(HttpMethod::REQUEST_DELETE);
-        return $this->apiClient->callEndpoint(sprintf('%s/%s/avatar/%s', self::ENDPOINT, $projectId, $avatarId));
+        return $this->apiClient->callEndpoint(sprintf('%s/%s/avatar/%s', self::ENDPOINT, $projectId, $avatarId), array(), HttpMethod::REQUEST_DELETE);
     }
 
     /**
@@ -180,8 +181,7 @@ class ProjectEndpoint extends BaseEndpoint implements EndpointInterface
             $parameters['group'] = $group;
         }
 
-        $this->apiClient->setHttpMethod(HttpMethod::REQUEST_PUT);
-        return $this->apiClient->callEndpoint(sprintf('%s/%s/role/%s', self::ENDPOINT, $projectId, $roleId), $parameters);
+        return $this->apiClient->callEndpoint(sprintf('%s/%s/role/%s', self::ENDPOINT, $projectId, $roleId), $parameters, HttpMethod::REQUEST_PUT);
     }
 
     /**
@@ -205,8 +205,7 @@ class ProjectEndpoint extends BaseEndpoint implements EndpointInterface
             $parameters['group'] = $group;
         }
 
-        $this->apiClient->setHttpMethod(HttpMethod::REQUEST_POST);
-        return $this->apiClient->callEndpoint(sprintf('%s/%s/role/%s', self::ENDPOINT, $projectId, $roleId), $parameters);
+        return $this->apiClient->callEndpoint(sprintf('%s/%s/role/%s', self::ENDPOINT, $projectId, $roleId), $parameters, HttpMethod::REQUEST_POST);
     }
 
     /**
@@ -218,7 +217,6 @@ class ProjectEndpoint extends BaseEndpoint implements EndpointInterface
      */
     public function deleteRole($projectId, $roleId)
     {
-        $this->apiClient->setHttpMethod(HttpMethod::REQUEST_DELETE);
-        return $this->apiClient->callEndpoint(sprintf('%s/%s/role/%s', self::ENDPOINT, $projectId, $roleId));
+        return $this->apiClient->callEndpoint(sprintf('%s/%s/role/%s', self::ENDPOINT, $projectId, $roleId), array(), HttpMethod::REQUEST_DELETE);
     }
 } 

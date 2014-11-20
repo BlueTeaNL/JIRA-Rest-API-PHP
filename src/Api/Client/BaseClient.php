@@ -43,6 +43,11 @@ abstract class BaseClient
     protected $data;
 
     /**
+     * @var array
+     */
+    protected $headers = array();
+
+    /**
      * @param $baseUrl
      * @param AuthenticationInterface $authentication
      * @param bool $debug
@@ -172,5 +177,57 @@ abstract class BaseClient
     public function getResult()
     {
         return $this->data;
+    }
+
+    /**
+     * @param array $headers
+     */
+    public function setHeaders($headers)
+    {
+        $this->headers = $headers;
+    }
+
+    /**
+     * @return array
+     */
+    public function getHeaders()
+    {
+        return $this->headers;
+    }
+
+    /**
+     * @param $contentType
+     */
+    public function setContentType($contentType)
+    {
+        $this->headers['Content-Type'] = $contentType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContentType()
+    {
+        if (isset($this->headers['Content-Type'])) {
+            return $this->headers['Content-Type'];
+        }
+    }
+
+    /**
+     * @param $contentType
+     */
+    public function setAccept($contentType)
+    {
+        $this->headers['Accept'] = $contentType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAccept()
+    {
+        if (isset($this->headers['Accept'])) {
+            return $this->headers['Accept'];
+        }
     }
 } 

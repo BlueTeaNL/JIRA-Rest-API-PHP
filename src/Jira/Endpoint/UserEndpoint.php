@@ -2,6 +2,8 @@
 
 namespace Bluetea\Jira\Endpoint;
 
+use Bluetea\Api\Endpoint\BaseEndpoint;
+use Bluetea\Api\Endpoint\EndpointInterface;
 use Bluetea\Api\Request\HttpMethod;
 
 class UserEndpoint extends BaseEndpoint implements EndpointInterface
@@ -30,8 +32,7 @@ class UserEndpoint extends BaseEndpoint implements EndpointInterface
     public function update($username, $parameters = array())
     {
         $parameters['username'] = $username;
-        $this->apiClient->setHttpMethod(HttpMethod::REQUEST_PUT);
-        return $this->apiClient->callEndpoint(self::ENDPOINT, $parameters);
+        return $this->apiClient->callEndpoint(self::ENDPOINT, $parameters, HttpMethod::REQUEST_PUT);
     }
 
     /**
@@ -45,8 +46,7 @@ class UserEndpoint extends BaseEndpoint implements EndpointInterface
     public function add($username, $parameters = array())
     {
         $parameters['username'] = $username;
-        $this->apiClient->setHttpMethod(HttpMethod::REQUEST_POST);
-        return $this->apiClient->callEndpoint(self::ENDPOINT, $parameters);
+        return $this->apiClient->callEndpoint(self::ENDPOINT, $parameters, HttpMethod::REQUEST_POST);
     }
 
     /**
@@ -58,8 +58,7 @@ class UserEndpoint extends BaseEndpoint implements EndpointInterface
     public function delete($username)
     {
         $parameters['username'] = $username;
-        $this->apiClient->setHttpMethod(HttpMethod::REQUEST_DELETE);
-        return $this->apiClient->callEndpoint(self::ENDPOINT, $parameters);
+        return $this->apiClient->callEndpoint(self::ENDPOINT, $parameters, HttpMethod::REQUEST_DELETE);
     }
 
     /**
@@ -85,8 +84,7 @@ class UserEndpoint extends BaseEndpoint implements EndpointInterface
     {
         $parameters['username'] = $username;
         $parameters['password'] = $password;
-        $this->apiClient->setHttpMethod(HttpMethod::REQUEST_PUT);
-        return $this->apiClient->callEndpoint(sprintf('%s/avatars', self::ENDPOINT), $parameters);
+        return $this->apiClient->callEndpoint(sprintf('%s/avatars', self::ENDPOINT), $parameters, HttpMethod::REQUEST_PUT);
     }
 
     /**

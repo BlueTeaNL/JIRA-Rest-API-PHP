@@ -4,13 +4,16 @@ namespace Bluetea\Api\Client;
 
 use Bluetea\Api\Authentication\BasicAuthentication;
 use Bluetea\Api\Exception\ApiException;
-use Bluetea\Api\Exception\HttpException;
 use Bluetea\Api\Exception\HttpNotFoundException;
 use Bluetea\Api\Exception\ResultException;
 use Bluetea\Api\Exception\UnauthorizedException;
 use Bluetea\Api\Request\HttpMethod;
 use Bluetea\Api\Request\StatusCodes;
-use Guzzle\Http\Client;
+use GuzzleHttp\Client;
+use Guzzle\Http\Exception\ClientErrorResponseException;
+use Guzzle\Http\Exception\ServerErrorResponseException;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 
 class GuzzleClient extends BaseClient implements ClientInterface
 {
@@ -89,8 +92,8 @@ class GuzzleClient extends BaseClient implements ClientInterface
             );
         }
 
-        $httpClient = new Client($this->getBaseUrl(), array(
-            'defaults' => $defaults
+        $httpClient = new Client(array(
+            'base_url' => $this->getBaseUrl(), 'defaults' => $defaults
         ));
 
         $this->setHttpClient($httpClient);
@@ -124,43 +127,43 @@ class GuzzleClient extends BaseClient implements ClientInterface
         $request = $this->getHttpClient()->createRequest(
             $this->getHttpMethod(),
             $this->getEndpoint(),
-            null,
-            ($this->getHttpMethod() == 'GET' ?
-                array('query' => $this->getEndpointParameters())
-                :
-                array('json' => $this->getEndpointParameters())
-            ),
-            $options
+            array_merge(
+                $options,
+                array('headers' => $this->getHeaders()),
+                ($this->getHttpMethod() == HttpMethod::REQUEST_GET || $this->getHttpMethod() == HttpMethod::REQUEST_PUT ?
+                    array('query' => $this->getEndpointParameters())
+                    :
+                    array('body' => json_encode($this->getEndpointParameters()))
+                )
+            )
         );
 
-        $response = $request->send();
+        try {
+            $response = $this->getHttpClient()->send($request);
+        } catch (ClientException $e) {// Check if not found
+            if ($e->getResponse()->getStatusCode() === StatusCodes::HTTP_NOT_FOUND) {
+                throw new HttpNotFoundException();
+            }
+
+            // Check if unauthorized
+            if ($e->getResponse()->getStatusCode() === StatusCodes::HTTP_UNAUTHORIZED) {
+                throw new UnauthorizedException();
+            }
+
+            throw $e;
+        }
 
         $this->setHttpStatusCode($response->getStatusCode());
 
-        // Check if not found
-        if ($response->getStatusCode() === StatusCodes::HTTP_NOT_FOUND) {
-            throw new HttpNotFoundException();
-        }
-
-        // Check if unauthorized
-        if ($response->getStatusCode() === StatusCodes::HTTP_UNAUTHORIZED) {
-            throw new UnauthorizedException();
-        }
-
-        // Check if no content
-        if ($response->getStatusCode() === StatusCodes::HTTP_NO_CONTENT) {
-            throw new ResultException("No content");
-        }
-
-        if ($response->isSuccessful()) {
+        if ($this->getAccept() == 'application/json') {
             $this->setData($response->json());
         } else {
-            throw new HttpException(sprintf('Got HTTP status code %s', $response->getStatusCode()), $response->getStatusCode());
+            $this->setData($response->getBody(true));
         }
     }
 
     /**
-     * @param \Guzzle\Http\Client $httpClient
+     * @param Client $httpClient
      */
     public function setHttpClient($httpClient)
     {
@@ -168,7 +171,7 @@ class GuzzleClient extends BaseClient implements ClientInterface
     }
 
     /**
-     * @return \Guzzle\Http\Client
+     * @return Client
      */
     public function getHttpClient()
     {
