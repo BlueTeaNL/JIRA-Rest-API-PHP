@@ -15,6 +15,7 @@ namespace Acme\DemoBundle\Controller;
 
 use Bluetea\Api\Authentication\BasicAuthentication;
 use Bluetea\Api\Client\CurlClient;
+use Bluetea\Api\Client\GuzzleClient;
 use Bluetea\Jira\Endpoint\ProjectEndpoint;
 
 
@@ -22,10 +23,18 @@ class TestController extends Controller
 {
     public function testAction()
     {
+        // With Curl
         $apiClient = new CurlClient(
             'https://atlassian.yourdomain.com/rest/api/2',
             new BasicAuthentication('username', 'password')
         );
+
+        // Or Guzzle if you like
+        $apiClient = new GuzzleClient(
+            'https://atlassian.yourdomain.com/rest/api/2',
+            new BasicAuthentication('username', 'password')
+        );
+
         $projectEndpoint = new ProjectEndpoint($apiClient);
         // Get all projects
         return new JsonResponse($projectEndpoint->findAll());

@@ -17,6 +17,9 @@
         "ext-curl": "*",
         "ext-json": "*"
     },
+    "suggest": {
+        "guzzle/guzzle": "PHP HTTP client and framework for consuming RESTful web services"
+    },
     "autoload": {
         "psr-4": {
             "Bluetea\\": "src/"
