@@ -102,4 +102,26 @@ class UserEndpoint extends BaseEndpoint implements EndpointInterface
     {
         return $this->apiClient->callEndpoint(sprintf('user/mail/password?username=%s', $username), array(), HttpMethod::REQUEST_POST);
     }
+
+    /**
+     * Get direct user groups
+     *
+     * @param $username
+     * @return mixed
+     */
+    public function getDirectGroups($username)
+    {
+        return $this->apiClient->callEndpoint(sprintf('user/group/direct?username=%s', $username));
+    }
+
+    /**
+     * Get nested user groups
+     *
+     * @param $username
+     * @return mixed
+     */
+    public function getNestedGroups($username)
+    {
+        return $this->apiClient->callEndpoint(sprintf('user/group/nested?username=%s', $username));
+    }
 }

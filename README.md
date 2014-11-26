@@ -23,13 +23,6 @@ class TestController extends Controller
 {
     public function testAction()
     {
-        // With Curl
-        $apiClient = new CurlClient(
-            'https://atlassian.yourdomain.com/rest/api/2',
-            new BasicAuthentication('username', 'password')
-        );
-
-        // Or Guzzle if you like
         $apiClient = new GuzzleClient(
             'https://atlassian.yourdomain.com/rest/api/2',
             new BasicAuthentication('username', 'password')
