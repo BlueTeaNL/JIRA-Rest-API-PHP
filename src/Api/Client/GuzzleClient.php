@@ -130,11 +130,7 @@ class GuzzleClient extends BaseClient implements ClientInterface
             array_merge(
                 $options,
                 array('headers' => $this->getHeaders()),
-                ($this->getHttpMethod() == HttpMethod::REQUEST_GET || $this->getHttpMethod() == HttpMethod::REQUEST_PUT ?
-                    array('query' => $this->getEndpointParameters())
-                    :
-                    array('body' => json_encode($this->getEndpointParameters()))
-                )
+                $this->getEndpointParameters()
             )
         );
 
