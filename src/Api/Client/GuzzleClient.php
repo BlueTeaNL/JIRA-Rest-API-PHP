@@ -129,10 +129,13 @@ class GuzzleClient extends BaseClient implements ClientInterface
             $this->getEndpoint(),
             array_merge(
                 $options,
-                array('headers' => $this->getHeaders()),
-                $this->getEndpointParameters()
+                array('headers' => $this->getHeaders())
             )
         );
+
+        foreach ($this->getEndpointParameters() as $key => $value) {
+            $request->getQuery()->set($key, $value);
+        }
 
         try {
             $response = $this->getHttpClient()->send($request);
