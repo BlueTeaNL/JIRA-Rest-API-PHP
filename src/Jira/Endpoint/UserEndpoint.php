@@ -32,7 +32,12 @@ class UserEndpoint extends BaseEndpoint implements EndpointInterface
     public function update($username, $parameters = array())
     {
         $parameters['username'] = $username;
-        return $this->apiClient->callEndpoint(self::ENDPOINT, $parameters, HttpMethod::REQUEST_PUT);
+        return $this->apiClient->callEndpoint(
+            self::ENDPOINT,
+            $parameters,
+            null,
+            HttpMethod::REQUEST_PUT
+        );
     }
 
     /**
@@ -46,7 +51,12 @@ class UserEndpoint extends BaseEndpoint implements EndpointInterface
     public function add($username, $parameters = array())
     {
         $parameters['username'] = $username;
-        return $this->apiClient->callEndpoint(self::ENDPOINT, $parameters, HttpMethod::REQUEST_POST);
+        return $this->apiClient->callEndpoint(
+            self::ENDPOINT,
+            $parameters,
+            null,
+            HttpMethod::REQUEST_POST
+        );
     }
 
     /**
@@ -58,7 +68,12 @@ class UserEndpoint extends BaseEndpoint implements EndpointInterface
     public function delete($username)
     {
         $parameters['username'] = $username;
-        return $this->apiClient->callEndpoint(self::ENDPOINT, $parameters, HttpMethod::REQUEST_DELETE);
+        return $this->apiClient->callEndpoint(
+            self::ENDPOINT,
+            $parameters,
+            null,
+            HttpMethod::REQUEST_DELETE
+        );
     }
 
     /**
@@ -84,7 +99,12 @@ class UserEndpoint extends BaseEndpoint implements EndpointInterface
     {
         $parameters['username'] = $username;
         $parameters['password'] = $password;
-        return $this->apiClient->callEndpoint(sprintf('%s/avatars', self::ENDPOINT), $parameters, HttpMethod::REQUEST_PUT);
+        return $this->apiClient->callEndpoint(
+            sprintf('%s/avatars', self::ENDPOINT),
+            $parameters,
+            null,
+            HttpMethod::REQUEST_PUT
+        );
     }
 
     /**

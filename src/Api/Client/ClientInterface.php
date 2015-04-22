@@ -12,10 +12,11 @@ interface ClientInterface
      *
      * @param $endpoint
      * @param array $endpointParameters
+     * @param string $body
      * @param string $method
      * @return mixed
      */
-    public function callEndpoint($endpoint, array $endpointParameters = [], $method = HttpMethod::REQUEST_GET);
+    public function callEndpoint($endpoint, array $endpointParameters = [], $body = null, $method = HttpMethod::REQUEST_GET);
 
     /**
      * @param AuthenticationInterface $authentication

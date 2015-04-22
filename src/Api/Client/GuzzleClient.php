@@ -38,14 +38,16 @@ class GuzzleClient extends BaseClient implements ClientInterface
     protected $httpStatusCode;
 
     /**
-     * Call the Exact Online API with an endpoint
+     * Call the API with an endpoint
      */
-    public function callEndpoint($endpoint, array $endpointParameters = [], $method = HttpMethod::REQUEST_GET)
+    public function callEndpoint($endpoint, array $endpointParameters = [], $body = null, $method = HttpMethod::REQUEST_GET)
     {
         // Set the endpoint
         $this->setEndpoint($endpoint);
         // Set the parameters
         $this->setEndpointParameters($endpointParameters);
+        // Set the body
+        $this->setBody($body);
         // Set the HTTP method
         $this->setHttpMethod($method);
         // Call the endpoint
@@ -135,6 +137,10 @@ class GuzzleClient extends BaseClient implements ClientInterface
 
         foreach ($this->getEndpointParameters() as $key => $value) {
             $request->getQuery()->set($key, $value);
+        }
+
+        if (($body = $this->getBody()) !== null) {
+            $request->setBody(\GuzzleHttp\Stream\Stream::factory($body));
         }
 
         try {

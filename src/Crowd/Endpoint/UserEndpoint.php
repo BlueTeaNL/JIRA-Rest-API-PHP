@@ -41,7 +41,12 @@ class UserEndpoint extends BaseEndpoint implements EndpointInterface
             'email' => $emailAddress,
             'active' => $active
         );
-        return $this->apiClient->callEndpoint('user', $parameters, HttpMethod::REQUEST_POST);
+        return $this->apiClient->callEndpoint(
+            'user',
+            $parameters,
+            null,
+            HttpMethod::REQUEST_POST
+        );
     }
 
     /**
@@ -64,7 +69,12 @@ class UserEndpoint extends BaseEndpoint implements EndpointInterface
             'email' => $emailAddress,
             'active' => $active
         );
-        return $this->apiClient->callEndpoint(sprintf('user?username=%s', $username), $parameters, HttpMethod::REQUEST_PUT);
+        return $this->apiClient->callEndpoint(
+            sprintf('user?username=%s', $username),
+            $parameters,
+            null,
+            HttpMethod::REQUEST_PUT
+        );
     }
 
     /**
@@ -76,7 +86,12 @@ class UserEndpoint extends BaseEndpoint implements EndpointInterface
     public function delete($username)
     {
         $parameters['username'] = $username;
-        return $this->apiClient->callEndpoint('user', $parameters, HttpMethod::REQUEST_DELETE);
+        return $this->apiClient->callEndpoint(
+            'user',
+            $parameters,
+            null,
+            HttpMethod::REQUEST_DELETE
+        );
     }
 
     /**
@@ -89,7 +104,12 @@ class UserEndpoint extends BaseEndpoint implements EndpointInterface
     public function updatePassword($username, $password)
     {
         $parameters['password'] = $password;
-        return $this->apiClient->callEndpoint(sprintf('user?username=%s', $username), $parameters, HttpMethod::REQUEST_PUT);
+        return $this->apiClient->callEndpoint(
+            sprintf('user?username=%s', $username),
+            $parameters,
+            null,
+            HttpMethod::REQUEST_PUT
+        );
     }
 
     /**
@@ -100,7 +120,12 @@ class UserEndpoint extends BaseEndpoint implements EndpointInterface
      */
     public function mailPasswordResetLink($username)
     {
-        return $this->apiClient->callEndpoint(sprintf('user/mail/password?username=%s', $username), array(), HttpMethod::REQUEST_POST);
+        return $this->apiClient->callEndpoint(
+            sprintf('user/mail/password?username=%s', $username),
+            array(),
+            null,
+            HttpMethod::REQUEST_POST
+        );
     }
 
     /**

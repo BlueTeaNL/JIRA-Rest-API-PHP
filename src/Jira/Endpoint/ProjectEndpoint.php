@@ -66,7 +66,12 @@ class ProjectEndpoint extends BaseEndpoint implements EndpointInterface
      */
     public function deleteAvatar($projectId, $avatarId)
     {
-        return $this->apiClient->callEndpoint(sprintf('%s/%s/avatar/%s', self::ENDPOINT, $projectId, $avatarId), array(), HttpMethod::REQUEST_DELETE);
+        return $this->apiClient->callEndpoint(
+            sprintf('%s/%s/avatar/%s', self::ENDPOINT, $projectId, $avatarId),
+            array(),
+            null,
+            HttpMethod::REQUEST_DELETE
+        );
     }
 
     /**
@@ -181,7 +186,12 @@ class ProjectEndpoint extends BaseEndpoint implements EndpointInterface
             $parameters['group'] = $group;
         }
 
-        return $this->apiClient->callEndpoint(sprintf('%s/%s/role/%s', self::ENDPOINT, $projectId, $roleId), $parameters, HttpMethod::REQUEST_PUT);
+        return $this->apiClient->callEndpoint(
+            sprintf('%s/%s/role/%s', self::ENDPOINT, $projectId, $roleId),
+            $parameters,
+            null,
+            HttpMethod::REQUEST_PUT
+        );
     }
 
     /**
@@ -205,7 +215,12 @@ class ProjectEndpoint extends BaseEndpoint implements EndpointInterface
             $parameters['group'] = $group;
         }
 
-        return $this->apiClient->callEndpoint(sprintf('%s/%s/role/%s', self::ENDPOINT, $projectId, $roleId), $parameters, HttpMethod::REQUEST_POST);
+        return $this->apiClient->callEndpoint(
+            sprintf('%s/%s/role/%s', self::ENDPOINT, $projectId, $roleId),
+            $parameters,
+            null,
+            HttpMethod::REQUEST_POST
+        );
     }
 
     /**
@@ -217,6 +232,11 @@ class ProjectEndpoint extends BaseEndpoint implements EndpointInterface
      */
     public function deleteRole($projectId, $roleId)
     {
-        return $this->apiClient->callEndpoint(sprintf('%s/%s/role/%s', self::ENDPOINT, $projectId, $roleId), array(), HttpMethod::REQUEST_DELETE);
+        return $this->apiClient->callEndpoint(
+            sprintf('%s/%s/role/%s', self::ENDPOINT, $projectId, $roleId),
+            array(),
+            null,
+            HttpMethod::REQUEST_DELETE
+        );
     }
 } 

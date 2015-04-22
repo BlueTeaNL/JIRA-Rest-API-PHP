@@ -19,6 +19,11 @@ class AuthenticationEndpoint extends BaseEndpoint implements EndpointInterface
     {
         $endpoint = sprintf('authentication?username=%s', urlencode($username));
         $parameters['value'] = $password;
-        return $this->apiClient->callEndpoint($endpoint, $parameters, HttpMethod::REQUEST_POST);
+        return $this->apiClient->callEndpoint(
+            $endpoint,
+            $parameters,
+            null,
+            HttpMethod::REQUEST_POST
+        );
     }
 }

@@ -30,6 +30,11 @@ abstract class BaseClient
     /**
      * @var string
      */
+    protected $body = null;
+
+    /**
+     * @var string
+     */
     protected $httpMethod = HttpMethod::REQUEST_GET;
 
     /**
@@ -121,6 +126,22 @@ abstract class BaseClient
     public function getEndpointParameters()
     {
         return $this->endpointParameters;
+    }
+
+    /**
+     * @param string $body
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBody()
+    {
+        return $this->body;
     }
 
     /**
